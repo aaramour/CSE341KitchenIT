@@ -3,7 +3,7 @@ const swaggerAutogen = require('swagger-autogen')();
 const doc = {
   info: {
     title: 'Contacts API',
-    description: 'User and Product handler'
+    description: 'KitchenIT'
   },
   host: 'localhost:3000'
 };
