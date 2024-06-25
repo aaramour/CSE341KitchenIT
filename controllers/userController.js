@@ -60,7 +60,7 @@ const loginUser = async (req, res, next) => {
 
     const passwordMatch = await bcrypt.compare(body.password, user.password);
     if (passwordMatch) {
-      const token = jwt.sign({ userId: user._id }, "972cba3ad0cc474d06e8fa38d3e2359028fd80320b1257d0a64027e648e11bfc454af93714fab1bf3fc46f04eac7d800fa623259c9011dc6177813e00c259bff", { expiresIn: "1h" });
+      const token = jwt.sign({ userId: user._id }, "b5fd3a9c5c4a1d1fd877612a0a77e2a393dca616ddff128bc6a2aa41f2777d54607ce6ba58c019886beb3ecfb18f8000b1b801a73839e942be36b41fa0bf45af", { expiresIn: "1h" });
       res.status(200).json({ message: "Login successful", token });
     } else {
       res.status(401).json({ message: "Invalid email or password" });
