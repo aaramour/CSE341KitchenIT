@@ -5,7 +5,10 @@ const doc = {
     title: 'Contacts API',
     description: 'KitchenIT'
   },
-  host: 'localhost:3000'
+  // host: 'localhost:3000'
+  
+  host: 'cse341kitchenit.onrender.com',
+  schemes: ['https']
 };
 
 const outputFile = './swagger-output.json';

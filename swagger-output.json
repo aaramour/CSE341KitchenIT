@@ -5,10 +5,10 @@
     "description": "KitchenIT",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "cse341kitchenit.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/recipes/findByTags": {
