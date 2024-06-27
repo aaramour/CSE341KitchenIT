@@ -1,4 +1,4 @@
-const mongodb = require("../config/dbconnect");
+const mongodb = require("../config/dbConnect");
 const { ObjectId } = require("mongodb");
 const bcrypt = require("bcrypt");
 
