@@ -1,23 +1,15 @@
 const mongodb = require("../config/dbconnect");
 const { ObjectId } = require("mongodb");
-const Joi = require("joi");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-
-const userSchema = Joi.object({
-  name: Joi.string().required(),
-  email: Joi.string().email().required(),
-  password: Joi.string().required()
-});
 
 const saltRounds = 10;
 
 const registerUser = async (req, res, next) => {
   const { body } = req;
   try {
-    const { error } = userSchema.validate(body);
-    if (error) {
-      return res.status(400).json({ message: error.details[0].message });
+    // Validate input manually
+    if (!body.name || !body.email || !body.password) {
+      return res.status(400).json({ message: "All fields are required" });
     }
 
     const hashedPassword = await bcrypt.hash(body.password, saltRounds);
@@ -41,13 +33,9 @@ const registerUser = async (req, res, next) => {
 const loginUser = async (req, res, next) => {
   const { body } = req;
   try {
-    const { error } = Joi.object({
-      email: Joi.string().email().required(),
-      password: Joi.string().required(),
-    }).validate(body);
-
-    if (error) {
-      return res.status(400).json({ message: error.details[0].message });
+    // Validate input manually
+    if (!body.email || !body.password) {
+      return res.status(400).json({ message: "All fields are required" });
     }
 
     const db = mongodb.getDb();
@@ -60,8 +48,7 @@ const loginUser = async (req, res, next) => {
 
     const passwordMatch = await bcrypt.compare(body.password, user.password);
     if (passwordMatch) {
-      const token = jwt.sign({ userId: user._id }, "b5fd3a9c5c4a1d1fd877612a0a77e2a393dca616ddff128bc6a2aa41f2777d54607ce6ba58c019886beb3ecfb18f8000b1b801a73839e942be36b41fa0bf45af", { expiresIn: "1h" });
-      res.status(200).json({ message: "Login successful", token });
+      res.status(200).json({ message: "Login successful" });
     } else {
       res.status(401).json({ message: "Invalid email or password" });
     }
@@ -112,15 +99,9 @@ const updateUser = async (req, res, next) => {
     return res.status(400).json({ message: "Missing user ID" });
   }
 
-  const updateSchema = Joi.object({
-    name: Joi.string().required(),
-    email: Joi.string().email().required(),
-    password: Joi.string().required(),
-  });
-
-  const { error } = updateSchema.validate(body);
-  if (error) {
-    return res.status(400).json({ message: error.details[0].message });
+  // Validate input manually
+  if (!body.name || !body.email || !body.password) {
+    return res.status(400).json({ message: "All fields are required" });
   }
 
   try {
