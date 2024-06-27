@@ -60,7 +60,7 @@ const loginUser = async (req, res, next) => {
 
 const getAllUsers = async (req, res, next) => {
   try {
-    const db = mongodb.getDb();
+    const db = mongodb.getDb().db("kitchenitdatabase");  //not sure why but we need to specify the database here
     const collection = db.collection("users");
     const users = await collection.find().toArray();
     res.status(200).json(users);
@@ -69,6 +69,7 @@ const getAllUsers = async (req, res, next) => {
     res.status(500).json({ message: "Error fetching users" });
   }
 };
+
 
 const getUserById = async (req, res, next) => {
   const userId = req.params.id;
