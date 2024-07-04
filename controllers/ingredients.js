@@ -54,5 +54,45 @@ ingCont.postIngredient = async (req, res, next) => {
   }
 };
 
+ingCont.updateIngredient = async (req, res) => {
+  if (!ObjectId.isValid(req.params.id)) {
+    return res.status(400).json('The ingredient id must be valid in order to update.');
+}
+const ingredientId = new ObjectId(req.params.id);
+const ingredient = {
+    name: req.body.name,
+    quantity: req.body.quantity,
+    unit: req.body.unit,
+    createdAt: req.body.createdAt
+};
+try {
+    const response = await mongodb.getDb().db().collection('ingredients').replaceOne({ _id: ingredientId }, ingredient);
+    if (response.modifiedCount > 0) {
+        res.status(204).send();
+    } else {
+        res.status(500).json('There was an error while trying to update the ingredient.');
+    }
+} catch (err) {
+    res.status(500).json({ message: err.message });
+}
+};
+
+ingCont.deleteIngredient = async (req, res) => {
+  if (!ObjectId.isValid(req.params.id)) {
+    return res.status(400).json('The ingredient id must be valid in order to delete.');
+}
+const ingredientId = new ObjectId(req.params.id);
+try {
+    const response = await mongodb.getDb().db().collection('ingredients').deleteOne({ _id: ingredientId });
+    if (response.deletedCount > 0) {
+        res.status(200).send();
+    } else {
+        res.status(500).json('There was an error while trying to delete the ingredient.');
+    }
+} catch (err) {
+    res.status(500).json({ message: err.message });
+}
+};
+
 
 module.exports = ingCont;
