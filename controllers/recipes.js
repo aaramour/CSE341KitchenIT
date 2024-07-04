@@ -1,5 +1,12 @@
 const mongodb = require("../config/dbConnect");
 const { ObjectId } = require("mongodb");
+const multer = require("multer");
+const path = require("path");
+
+// Setup multer for file uploads
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
 
 const recipesCont = {}
 
@@ -20,38 +27,145 @@ recipesCont.recipesContTempFunc = async (req, res, next) => {
 };
 
 recipesCont.postRecipe = async (req, res, next) => {
-  try {
-      const db = mongodb.getDb();
-      const collection = db.collection("recipes");
-      
-      // Get the recipe data from the request body
-      const { title, ingredients, instructions } = req.body;
+    try {
+        const db = mongodb.getDb();
+        const collection = db.collection("recipes");
 
-      // Validate the data (basic example, you can add more validation)
-      if (!title || !ingredients || !instructions) {
-          return res.status(400).json({ message: "Missing required fields" });
-      }
+        // Get the recipe data from the request body
+        const { title, ingredients, instructions } = req.body;
 
-      // Create a new recipe object
-      const newRecipe = {
-          title,
-          ingredients,
-          instructions,
-          createdAt: new Date()
-      };
+        // Manual Validation until Oauth is added
+        if (!title || !ingredients || !instructions) {
+            return res.status(400).json({ message: "Missing required fields" });
+        }
 
-      // Insert the new recipe into the collection
-      const result = await collection.insertOne(newRecipe);
+        // Initialize image as null initially
+        let image = null;
 
-      // Return the inserted recipe with a success message
-      res.status(201).json({
-          message: "Recipe created successfully",
-          recipe: result.ops[0]
-      });
-  } catch (error) {
-      console.error("Error posting recipe:", error);
-      res.status(500).json({ message: "Error posting recipe" });
-  }
+        // Handle image upload using multer
+        upload.single('image')(req, res, async (err) => {
+            if (err) {
+                console.error("Error uploading image:", err);
+                return res.status(500).json({ message: "Error uploading image" });
+            }
+
+            // If an image was uploaded, convert it to base64
+            if (req.file) {
+                image = req.file.buffer.toString('base64');
+            }
+
+            // Create a new recipe object with image and reviews fields
+            const newRecipe = {
+                title,
+                ingredients,
+                instructions,
+                createdAt: new Date(),
+                image, 
+                reviews: []
+            };
+
+            // Insert the new recipe into the collection
+            const result = await collection.insertOne(newRecipe);
+
+            // Return the inserted recipe with a success message
+            res.status(201).json({
+                message: "Recipe created successfully",
+                recipe: result.ops[0]
+            });
+        });
+
+    } catch (error) {
+        console.error("Error posting recipe:", error);
+        res.status(500).json({ message: "Error posting recipe" });
+    }
+};
+
+recipesCont.uploadImage = async (req, res, next) => {
+    const recipeId = req.params.id;
+
+    try {
+        const db = mongodb.getDb();
+        const collection = db.collection("recipes");
+
+        // Check if recipeId is valid
+        if (!ObjectId.isValid(recipeId)) {
+            return res.status(400).json({ message: "Invalid recipe ID" });
+        }
+
+        // Handle image upload using multer
+        upload.single('image')(req, res, async (err) => {
+            if (err) {
+                console.error("Error uploading image:", err);
+                return res.status(500).json({ message: "Error uploading image" });
+            }
+
+            // Convert image buffer to base64
+            const base64Image = req.file.buffer.toString('base64');
+
+            // Update the recipe with the new image
+            const result = await collection.updateOne(
+                { _id: new ObjectId(recipeId) },
+                { $set: { image: base64Image } }
+            );
+
+            if (result.modifiedCount > 0) {
+                res.status(201).json({ message: "Image uploaded successfully" });
+            } else {
+                res.status(500).json({ message: "Error uploading image" });
+            }
+        });
+    } catch (error) {
+        console.error("Error uploading image:", error);
+        res.status(500).json({ message: "Error uploading image" });
+    }
+};
+
+
+recipesCont.addReview = async (req, res, next) => {
+    const recipeId = req.params.id;
+
+    try {
+        const db = mongodb.getDb();
+        const collection = db.collection("recipes");
+
+        const { review, rating } = req.body;
+
+        // Validate the review data
+        if (!ObjectId.isValid(recipeId)) {
+            return res.status(400).json({ message: "Invalid recipe ID" });
+        }
+        if (typeof review !== 'string' || !review.trim()) {
+            return res.status(400).json({ message: "Invalid review" });
+        }
+        if (typeof rating !== 'number' || rating < 1 || rating > 5 || (rating * 10) % 5 !== 0) {
+            return res.status(400).json({ message: "Invalid rating" });
+        }
+
+        // Create a new review object
+        const newReview = {
+            review,
+            rating,
+            createdAt: new Date()
+        };
+
+        // Update the recipe with the new review
+        const result = await collection.updateOne(
+            { _id: new ObjectId(recipeId) },
+            { $push: { reviews: newReview } }
+        );
+
+        if (result.modifiedCount > 0) {
+            res.status(201).json({
+                message: "Review added successfully",
+                review: newReview
+            });
+        } else {
+            res.status(500).json({ message: "Error adding review" });
+        }
+    } catch (error) {
+        console.error("Error adding review:", error);
+        res.status(500).json({ message: "Error adding review" });
+    }
 };
 
 recipesCont.updateRecipe = async (req, res) => {

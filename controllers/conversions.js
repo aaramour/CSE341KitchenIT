@@ -16,7 +16,40 @@ convCont.getAllConversions = async (req, res, next) => {
   };
 
 convCont.convContTempFunc = async (req, res, next) => {
+};
 
+convCont.postConversion = async (req, res) => {
+  try {
+      const db = mongodb.getDb();
+      const collection = db.collection("conversions");
+
+      // Get the conversion data from the request body
+      const { valueOne, valueTwo } = req.body;
+
+      // Validate the data (basic example, you can add more validation)
+      if (!valueOne || !valueTwo) {
+          return res.status(400).json({ message: "Missing required fields" });
+      }
+
+      // Create a new conversion object
+      const newConversion = {
+          valueOne,
+          valueTwo,
+          createdAt: new Date()
+      };
+
+      // Insert the new conversion into the collection
+      const result = await collection.insertOne(newConversion);
+
+      // Return the inserted conversion with a success message
+      res.status(201).json({
+          message: "Conversion created successfully",
+          conversion: result.ops[0]
+      });
+  } catch (error) {
+      console.error("Error posting conversion:", error);
+      res.status(500).json({ message: "Error posting conversion" });
+  }
 };
 
 convCont.updateConversion = async (req, res) => {
