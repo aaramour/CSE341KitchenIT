@@ -5,7 +5,7 @@ const ingredientsController = require('../controllers/ingredients');
 
 
 router.get('/', ingredientsController.getAllIngredients);
-router.get('/:id', ingredientsController.ingContTempFunc);
+router.get('/:id', ingredientsController.getIngredientById);
 router.post('/', ingredientsController.postIngredient);
 router.put('/:id',  ingredientsController.updateIngredient);
 router.delete('/:id', ingredientsController.deleteIngredient);
