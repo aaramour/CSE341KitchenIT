@@ -70,7 +70,7 @@ const getAllUsers = async (req, res, next) => {
   }
 };
 
-
+// Get user by ID/ get single user
 const getUserById = async (req, res, next) => {
   const userId = req.params.id;
 
@@ -79,7 +79,7 @@ const getUserById = async (req, res, next) => {
   }
 
   try {
-    const db = mongodb.getDb();
+    const db = mongodb.getDb().db(process.env.DB_NAME);
     const collection = db.collection("users");
     const user = await collection.findOne({ _id: new ObjectId(userId) });
     if (!user) {

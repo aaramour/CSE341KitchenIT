@@ -10,6 +10,7 @@ const upload = multer({ storage: storage });
 
 const recipesCont = {}
 
+// Get All Recipes (not used)
 recipesCont.getAllRecipes = async (req, res, next) => {
     try {
       const db = mongodb.getDb();
@@ -22,8 +23,55 @@ recipesCont.getAllRecipes = async (req, res, next) => {
     }
   };
 
+// Placeholder/temp function
 recipesCont.recipesContTempFunc = async (req, res, next) => {
 
+};
+
+// Get recipe by ID/ get single recipe
+recipesCont.getRecipeById = async (req, res, next) => {
+    if (!ObjectId.isValid(req.params.id)) {
+        return res.status(400).json('Invalid recipe ID.');
+    }
+    try {
+        const recipeId = new ObjectId(req.params.id);
+        const result = await mongodb
+            .getDb()
+            .db(process.env.DB_NAME)
+            .collection("recipes")
+            .find({ _id: recipeId })
+        result.toArray().then((lists) => {
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).json(lists);
+        });
+    } catch (error) {
+        console.error("Error fetching recipe: ", error);
+        res.status(500).json(error);
+    }
+};
+
+// Get recipes by tag; test with 'breakfast' to get two recipes
+recipesCont.getRecipeByTag = async (req, res, next) => {
+    if (!req.params.tag) {
+        return res.status(400).json('Missing search parameter: tag');
+    }
+    
+    try {
+        const recipeTag = req.params.tag;
+        const result = await mongodb
+            .getDb()
+            .db(process.env.DB_NAME)
+            .collection("recipes")
+            .find({tags: recipeTag})
+            // .find({$or:[{ $text: { $search: recipeTag } }, { tags: {$in:[recipeTag]}}]})
+        result.toArray().then((lists) => {
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).json(lists);
+        });
+    } catch (error) {
+        console.error("Error fetching recipes: ", error);
+        res.status(500).json(error);
+    }
 };
 
 recipesCont.postRecipe = async (req, res, next) => {

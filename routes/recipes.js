@@ -4,8 +4,8 @@ const router = express.Router();
 const recipesController = require('../controllers/recipes');
 
 
-router.get('/findByTags', recipesController.recipesContTempFunc);
-router.get('/:id', recipesController.recipesContTempFunc);
+router.get('/findByTags/:tag', recipesController.getRecipeByTag);
+router.get('/:id', recipesController.getRecipeById);
 router.post('/', recipesController.postRecipe);
 router.put('/:id', recipesController.updateRecipe);
 router.delete('/:id', recipesController.deleteRecipe);

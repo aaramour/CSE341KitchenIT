@@ -5,7 +5,7 @@ const conversionsController =require('../controllers/conversions');
 
 
 router.get('/', conversionsController.getAllConversions);
-router.get('/:id', conversionsController.convContTempFunc);
+router.get('/:id', conversionsController.getConversionById);
 router.post('/', conversionsController.postConversion);
 router.put('/:id', conversionsController.updateConversion);
 router.delete('/:id', conversionsController.deleteConversion);

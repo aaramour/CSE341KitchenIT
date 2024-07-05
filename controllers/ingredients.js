@@ -5,7 +5,7 @@ const ingCont = {}
 
 ingCont.getAllIngredients = async (req, res, next) => {
     try {
-      const db = mongodb.getDb();
+      const db = mongodb.getDb().db(process.env.DB_NAME);
       const collection = db.collection("ingredients");
       const users = await collection.find().toArray();
       res.status(200).json(users);
@@ -17,6 +17,28 @@ ingCont.getAllIngredients = async (req, res, next) => {
 
 ingCont.ingContTempFunc = async (req, res, next) => {
 
+};
+
+// Get ingredient by ID/ get single ingredient
+ingCont.getIngredientById = async (req, res, next) => {
+    if (!ObjectId.isValid(req.params.id)) {
+        return res.status(400).json('Invalid ingredient ID.');
+    }
+    try {
+        const ingredientId = new ObjectId(req.params.id);
+        const result = await mongodb
+            .getDb()
+            .db(process.env.DB_NAME)
+            .collection("ingredients")
+            .find({ _id: ingredientId })
+        result.toArray().then((lists) => {
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).json(lists);
+        });
+    } catch (error) {
+        console.error("Error fetching ingredient: ", error);
+        res.status(500).json(error);
+    }
 };
 
 ingCont.postIngredient = async (req, res, next) => {
