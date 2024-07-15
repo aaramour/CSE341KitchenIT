@@ -19,6 +19,8 @@ const config = {
   issuerBaseURL: process.env.ISSUER_BASE_URL
 };
 
+app.use(bodyParser.json());
+
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
 
@@ -33,7 +35,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
   .use('/conversions', require('./routes/conversions'))
   .use('/users', require('./routes/userRoute'))
   .use('/ingredients', require('./routes/ingredients'))
-  .use(bodyParser.json())
   .use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     next();

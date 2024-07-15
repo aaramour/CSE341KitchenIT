@@ -71,7 +71,7 @@ ingCont.postIngredient = async (req, res, next) => {
             ingredient: result.ops[0]
         });
     } catch (error) {
-        console.error("Error adding ingredient:", error);
+        console.error("Error adding ingredient:", error.message);
         res.status(500).json({ message: "Error adding ingredient" });
     }
 };
