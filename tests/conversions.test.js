@@ -3,6 +3,7 @@ const express = require('express');
 const { ObjectId } = require('mongodb');
 const mongodb = require('../config/dbConnect');
 const conversionsRouter = require('../routes/conversions');
+require('dotenv').config();
 
 const app = express();
 app.use(express.json());
