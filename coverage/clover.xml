@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1721061833774" clover="3.2.0">
-  <project timestamp="1721061833774" name="All files">
-    <metrics statements="369" coveredstatements="38" conditionals="96" coveredconditionals="3" methods="33" coveredmethods="5" elements="498" coveredelements="46" complexity="0" loc="369" ncloc="369" packages="2" files="10" classes="10"/>
+<coverage generated="1721063667465" clover="3.2.0">
+  <project timestamp="1721063667465" name="All files">
+    <metrics statements="369" coveredstatements="58" conditionals="96" coveredconditionals="3" methods="33" coveredmethods="5" elements="498" coveredelements="66" complexity="0" loc="369" ncloc="369" packages="2" files="10" classes="10"/>
     <package name="controllers">
-      <metrics statements="312" coveredstatements="28" conditionals="96" coveredconditionals="3" methods="33" coveredmethods="5"/>
+      <metrics statements="312" coveredstatements="38" conditionals="96" coveredconditionals="3" methods="33" coveredmethods="5"/>
       <file name="conversions.js" path="C:\Documents\CSE341\KitchenIT\CSE341KitchenIT\controllers\conversions.js">
         <metrics statements="57" coveredstatements="28" conditionals="14" coveredconditionals="3" methods="7" coveredmethods="5"/>
         <line num="1" count="1" type="stmt"/>
@@ -65,11 +65,11 @@
         <line num="119" count="1" type="stmt"/>
       </file>
       <file name="ingredients.js" path="C:\Documents\CSE341\KitchenIT\CSE341KitchenIT\controllers\ingredients.js">
-        <metrics statements="57" coveredstatements="0" conditionals="15" coveredconditionals="0" methods="7" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="2" count="0" type="stmt"/>
-        <line num="4" count="0" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
+        <metrics statements="57" coveredstatements="10" conditionals="15" coveredconditionals="0" methods="7" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
         <line num="7" count="0" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
         <line num="9" count="0" type="stmt"/>
@@ -77,8 +77,8 @@
         <line num="11" count="0" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
         <line num="14" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
         <line num="24" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="25" count="0" type="stmt"/>
         <line num="27" count="0" type="stmt"/>
@@ -89,7 +89,7 @@
         <line num="36" count="0" type="stmt"/>
         <line num="39" count="0" type="stmt"/>
         <line num="40" count="0" type="stmt"/>
-        <line num="44" count="0" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
         <line num="45" count="0" type="stmt"/>
         <line num="46" count="0" type="stmt"/>
         <line num="47" count="0" type="stmt"/>
@@ -101,7 +101,7 @@
         <line num="69" count="0" type="stmt"/>
         <line num="74" count="0" type="stmt"/>
         <line num="75" count="0" type="stmt"/>
-        <line num="79" count="0" type="stmt"/>
+        <line num="79" count="1" type="stmt"/>
         <line num="80" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="81" count="0" type="stmt"/>
         <line num="83" count="0" type="stmt"/>
@@ -112,7 +112,7 @@
         <line num="93" count="0" type="stmt"/>
         <line num="95" count="0" type="stmt"/>
         <line num="98" count="0" type="stmt"/>
-        <line num="102" count="0" type="stmt"/>
+        <line num="102" count="1" type="stmt"/>
         <line num="103" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="104" count="0" type="stmt"/>
         <line num="106" count="0" type="stmt"/>
@@ -122,7 +122,7 @@
         <line num="110" count="0" type="stmt"/>
         <line num="112" count="0" type="stmt"/>
         <line num="115" count="0" type="stmt"/>
-        <line num="120" count="0" type="stmt"/>
+        <line num="120" count="1" type="stmt"/>
       </file>
       <file name="recipes.js" path="C:\Documents\CSE341\KitchenIT\CSE341KitchenIT\controllers\recipes.js">
         <metrics statements="116" coveredstatements="0" conditionals="41" coveredconditionals="0" methods="13" coveredmethods="0"/>
@@ -330,7 +330,7 @@
       </file>
     </package>
     <package name="routes">
-      <metrics statements="57" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="57" coveredstatements="20" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="conversions.js" path="C:\Documents\CSE341\KitchenIT\CSE341KitchenIT\routes\conversions.js">
         <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
@@ -356,17 +356,17 @@
         <line num="23" count="0" type="stmt"/>
       </file>
       <file name="ingredients.js" path="C:\Documents\CSE341\KitchenIT\CSE341KitchenIT\routes\ingredients.js">
-        <metrics statements="10" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="2" count="0" type="stmt"/>
-        <line num="3" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
+        <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
       </file>
       <file name="recipes.js" path="C:\Documents\CSE341\KitchenIT\CSE341KitchenIT\routes\recipes.js">
         <metrics statements="12" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
