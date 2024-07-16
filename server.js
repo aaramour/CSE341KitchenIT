@@ -11,7 +11,7 @@ app.set('view engine', 'ejs');
 const { auth } = require('express-openid-connect');
 
 const config = {
-  authRequired: false,
+  authRequired: true,
   auth0Logout: true,
   secret: process.env.SECRET,
   baseURL: process.env.AUTH_BASE_URL || 'https://cse341kitchenit.onrender.com',
