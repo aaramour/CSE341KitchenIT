@@ -8,6 +8,7 @@
   "host": "cse341kitchenit.onrender.com",
   "basePath": "/",
   "schemes": [
+    "http",
     "https"
   ],
   "paths": {
