@@ -13,7 +13,7 @@ convCont.getAllConversions = async (req, res, next) => {
       console.error("Error fetching conversions:", error);
       res.status(500).json({ message: "Error fetching conversions" });
     }
-  };
+};
 
 
 // Get conversion by ID/ get single conversion
