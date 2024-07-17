@@ -22,24 +22,29 @@ ingCont.ingContTempFunc = async (req, res, next) => {
 // Get ingredient by ID/ get single ingredient
 ingCont.getIngredientById = async (req, res, next) => {
     if (!ObjectId.isValid(req.params.id)) {
-        return res.status(400).json('Invalid ingredient ID.');
+      return res.status(400).json('Invalid ingredient ID.');
     }
+  
     try {
-        const ingredientId = new ObjectId(req.params.id);
-        const result = await mongodb
-            .getDb()
-            .db(process.env.DB_NAME)
-            .collection("ingredients")
-            .find({ _id: ingredientId })
-        result.toArray().then((lists) => {
-            res.setHeader('Content-Type', 'application/json');
-            res.status(200).json(lists);
-        });
+      const ingredientId = new ObjectId(req.params.id);
+      const result = await mongodb
+        .getDb()
+        .db(process.env.DB_NAME)
+        .collection("ingredients")
+        .find({ _id: ingredientId });
+  
+      // Check if ingredient exists with valid ID
+      if (!result) {
+        return res.status(404).json('Ingredient not found.');
+      }
+  
+      const ingredient = await result; // Access the entire result object
+      res.status(200).json(ingredient);
     } catch (error) {
-        console.error("Error fetching ingredient: ", error);
-        res.status(500).json(error);
+      console.error("Error fetching ingredient: ", error);
+      res.status(500).json(error);
     }
-};
+  };
 
 ingCont.postIngredient = async (req, res, next) => {
     try {
@@ -65,10 +70,15 @@ ingCont.postIngredient = async (req, res, next) => {
         // Insert the new ingredient into the collection
         const result = await collection.insertOne(newIngredient);
 
+        // Check if the result contains the insertedId
+        if (!result.insertedId) {
+            throw new Error("Failed to retrieve the inserted ingredient ID");
+        }
+
         // Return the inserted ingredient with a success message
         res.status(201).json({
             message: "Ingredient added successfully",
-            ingredient: result.ops[0]
+            ingredient: { _id: result.insertedId, ...newIngredient }
         });
     } catch (error) {
         console.error("Error adding ingredient:", error.message);

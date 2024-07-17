@@ -6,6 +6,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger-output.json');
 const bodyParser = require('body-parser');
 const { auth } = require('express-openid-connect');
+const { ObjectId } = require('mongodb');
 
 app.set('view engine', 'ejs');
 
@@ -83,4 +84,4 @@ mongodb.initDb((err, mongodb ) => {
     }
   });
 
-  
+  module.exports = app;  

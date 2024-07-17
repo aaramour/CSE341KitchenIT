@@ -18,26 +18,30 @@ convCont.getAllConversions = async (req, res, next) => {
 
 // Get conversion by ID/ get single conversion
 convCont.getConversionById = async (req, res, next) => {
-    if (!ObjectId.isValid(req.params.id)) {
-        return res.status(400).json('Invalid conversion ID.');
-    }
-    try {
-        const conversionId = new ObjectId(req.params.id);
-        const result = await mongodb
-            .getDb()
-            .db(process.env.DB_NAME)
-            .collection("conversions")
-            .find({ _id: conversionId })
-        result.toArray().then((lists) => {
-            res.setHeader('Content-Type', 'application/json');
-            res.status(200).json(lists);
-        });
-    } catch (error) {
-        console.error("Error fetching conversion: ", error);
-        res.status(500).json(error);
-    }
-};
+  if (!ObjectId.isValid(req.params.id)) {
+    return res.status(400).json('Invalid conversion ID.');
+  }
 
+  try {
+    const conversionId = new ObjectId(req.params.id);
+    const result = await mongodb
+      .getDb()
+      .db(process.env.DB_NAME)
+      .collection("conversions")
+      .find({ _id: conversionId });
+
+    // Check if conversion exists with valid ID
+    if (!result) {
+      return res.status(404).json('Conversion not found.');
+    }
+
+    const conversion = await result.toArray(); // Now you can access the data
+    res.status(200).json(conversion);
+  } catch (error) {
+    console.error("Error fetching conversion: ", error);
+    res.status(500).json(error);
+  }
+};
 // Temp/placeholder function
 convCont.convContTempFunc = async (req, res, next) => {
 };
