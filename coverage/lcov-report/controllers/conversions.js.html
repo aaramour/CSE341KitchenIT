@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">49.12% </span>
+                <span class="strong">59.64% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>28/57</span>
+                <span class='fraction'>34/57</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">21.42% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/14</span>
+                <span class='fraction'>7/14</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">49.12% </span>
+                <span class="strong">59.64% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>28/57</span>
+                <span class='fraction'>34/57</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -231,31 +231,31 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -345,29 +345,29 @@ convCont.convContTempFunc = <span class="fstat-no" title="function not covered" 
 &nbsp;
 convCont.postConversion = async (req, res) =&gt; {
   try {
-      const db = mongodb.getDb();
+      const db = mongodb.getDb().db(process.env.DB_NAME);
       const collection = db.collection("conversions");
 &nbsp;
       // Get the conversion data from the request body
-      const { valueOne, valueTwo } = <span class="cstat-no" title="statement not covered" >req.body;</span>
+      const { valueOne, valueTwo } = req.body;
 &nbsp;
       // Validate the data (basic example, you can add more validation)
-<span class="cstat-no" title="statement not covered" >      if (!valueOne || !valueTwo) {</span>
-<span class="cstat-no" title="statement not covered" >          return res.status(400).json({ message: "Missing required fields" });</span>
+      if (!valueOne || !valueTwo) {
+          return res.status(400).json({ message: "Missing required fields" });
       }
 &nbsp;
       // Create a new conversion object
-      const newConversion = <span class="cstat-no" title="statement not covered" >{</span>
+      const newConversion = {
           valueOne,
           valueTwo,
           createdAt: new Date()
       };
 &nbsp;
       // Insert the new conversion into the collection
-      const result = <span class="cstat-no" title="statement not covered" >await collection.insertOne(newConversion);</span>
+      const result = await collection.insertOne(newConversion);
 &nbsp;
       // Return the inserted conversion with a success message
-<span class="cstat-no" title="statement not covered" >      res.status(201).json({</span>
+      res.status(201).json({
           message: "Conversion created successfully",
           conversion: result.ops[0]
       });
@@ -424,7 +424,7 @@ module.exports = convCont</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-07-16T22:04:46.429Z
+                at 2024-07-17T11:15:37.497Z
             </div>
         <script src="../prettify.js"></script>
         <script>

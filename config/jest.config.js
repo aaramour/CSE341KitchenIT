@@ -12,4 +12,6 @@ module.exports = {
     '**/tests/**/*.test.js'
   ],
   testPathIgnorePatterns: ['/node_modules/', '/config/'],
+  
+  
 };
