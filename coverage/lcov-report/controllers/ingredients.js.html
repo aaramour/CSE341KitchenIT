@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">17.54% </span>
+                <span class="strong">42.1% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/57</span>
+                <span class='fraction'>24/57</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/15</span>
+                <span class='fraction'>5/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">28.57% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>2/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">17.54% </span>
+                <span class="strong">42.1% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>10/57</span>
+                <span class='fraction'>24/57</span>
             </div>
         
             
@@ -188,11 +188,11 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -226,31 +226,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -306,12 +306,12 @@ const { ObjectId } = require("mongodb");
 &nbsp;
 const ingCont = {}
 &nbsp;
-ingCont.getAllIngredients = <span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-      const db = <span class="cstat-no" title="statement not covered" >mongodb.getDb().db(process.env.DB_NAME);</span>
-      const collection = <span class="cstat-no" title="statement not covered" >db.collection("ingredients");</span>
-      const users = <span class="cstat-no" title="statement not covered" >await collection.find().toArray();</span>
-<span class="cstat-no" title="statement not covered" >      res.status(200).json(users);</span>
+ingCont.getAllIngredients = async (req, res, next) =&gt; {
+    try {
+      const db = mongodb.getDb().db(process.env.DB_NAME);
+      const collection = db.collection("ingredients");
+      const users = await collection.find().toArray();
+      res.status(200).json(users);
     } catch (error) {
 <span class="cstat-no" title="statement not covered" >      console.error("Error fetching ingredients:", error);</span>
 <span class="cstat-no" title="statement not covered" >      res.status(500).json({ message: "Error fetching ingredients" });</span>
@@ -344,21 +344,21 @@ ingCont.getIngredientById = <span class="fstat-no" title="function not covered" 
     }
 };
 &nbsp;
-ingCont.postIngredient = <span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-        const db = <span class="cstat-no" title="statement not covered" >mongodb.getDb().db(process.env.DB_NAME);</span>
-        const collection = <span class="cstat-no" title="statement not covered" >db.collection("ingredients");</span>
+ingCont.postIngredient = async (req, res, next) =&gt; {
+    try {
+        const db = mongodb.getDb().db(process.env.DB_NAME);
+        const collection = db.collection("ingredients");
 &nbsp;
         // Get the ingredient data from the request body
-        const { name, quantity, unit } = <span class="cstat-no" title="statement not covered" >req.body;</span>
+        const { name, quantity, unit } = req.body;
 &nbsp;
         // Validate the data
-<span class="cstat-no" title="statement not covered" >        if (!name || !quantity || !unit) {</span>
-<span class="cstat-no" title="statement not covered" >            return res.status(400).json({ message: "Missing required fields" });</span>
+        if (!name || !quantity || !unit) {
+            return res.status(400).json({ message: "Missing required fields" });
         }
 &nbsp;
         // Create a new ingredient object
-        const newIngredient = <span class="cstat-no" title="statement not covered" >{</span>
+        const newIngredient = {
             name,
             quantity,
             unit,
@@ -366,10 +366,10 @@ ingCont.postIngredient = <span class="fstat-no" title="function not covered" >as
         };
 &nbsp;
         // Insert the new ingredient into the collection
-        const result = <span class="cstat-no" title="statement not covered" >await collection.insertOne(newIngredient);</span>
+        const result = await collection.insertOne(newIngredient);
 &nbsp;
         // Return the inserted ingredient with a success message
-<span class="cstat-no" title="statement not covered" >        res.status(201).json({</span>
+        res.status(201).json({
             message: "Ingredient added successfully",
             ingredient: result.ops[0]
         });
@@ -427,7 +427,7 @@ module.exports = ingCont;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-07-16T22:04:46.429Z
+                at 2024-07-17T11:15:37.497Z
             </div>
         <script src="../prettify.js"></script>
         <script>

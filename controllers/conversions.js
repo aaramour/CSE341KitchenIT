@@ -44,7 +44,7 @@ convCont.convContTempFunc = async (req, res, next) => {
 
 convCont.postConversion = async (req, res) => {
   try {
-      const db = mongodb.getDb();
+      const db = mongodb.getDb().db(process.env.DB_NAME);
       const collection = db.collection("conversions");
 
       // Get the conversion data from the request body
