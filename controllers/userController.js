@@ -108,7 +108,7 @@ const updateUser = async (req, res, next) => {
   try {
     const hashedPassword = await bcrypt.hash(body.password, saltRounds);
 
-    const db = mongodb.getDb();
+    const db = mongodb.getDb().db(process.env.DB_NAME);
     const collection = db.collection("users");
     const update = { 
       $set: { 
