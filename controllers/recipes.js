@@ -80,7 +80,7 @@ recipesCont.postRecipe = async (req, res, next) => {
         const collection = db.collection("recipes");
 
         // Get the recipe data from the request body
-        const { title, ingredients, instructions } = req.body;
+        const { title, ingredients, instructions, createdAt, tag } = req.body;
 
         // Manual Validation until OAuth is added
         if (!title || !ingredients || !instructions) {
