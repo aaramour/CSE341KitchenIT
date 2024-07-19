@@ -76,7 +76,7 @@ recipesCont.getRecipeByTag = async (req, res, next) => {
 
 recipesCont.postRecipe = async (req, res, next) => {
     try {
-        const db = mongodb.getDb();
+        const db = mongodb.getDb().db(process.env.DB_NAME);
         const collection = db.collection("recipes");
 
         // Get the recipe data from the request body
