@@ -93,6 +93,7 @@ recipesCont.postRecipe = async (req, res, next) => {
             ingredients,
             instructions,
             createdAt: new Date(),
+            tag
         };
 
         // Insert the new recipe into the collection
