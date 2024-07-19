@@ -87,51 +87,28 @@ recipesCont.postRecipe = async (req, res, next) => {
             return res.status(400).json({ message: "Missing required fields" });
         }
 
-        // Initialize image as null initially
-        let image = null;
+        // Create a new recipe object
+        const newRecipe = {
+            title,
+            ingredients,
+            instructions,
+            createdAt: new Date(),
+        };
 
-        // Handle image upload using multer
-        upload.single('image')(req, res, async (err) => {
-            if (err) {
-                console.error("Error uploading image:", err);
-                return res.status(500).json({ message: "Error uploading image" });
-            }
+        // Insert the new recipe into the collection
+        const result = await collection.insertOne(newRecipe);
 
-            // If an image was uploaded, convert it to base64
-            if (req.file) {
-                image = req.file.buffer.toString('base64');
-            }
-
-            // Create a new recipe object with image and reviews fields
-            const newRecipe = {
-                title,
-                ingredients,
-                instructions,
-                createdAt: new Date(),
-                image, 
-                reviews: []
-            };
-
-            try {
-                // Insert the new recipe into the collection
-                const result = await collection.insertOne(newRecipe);
-
-                // Return the inserted recipe with a success message
-                res.status(201).json({
-                    message: "Recipe created successfully",
-                    recipe: result.ops[0]
-                });
-            } catch (dbError) {
-                console.error("Error inserting recipe into database:", dbError);
-                res.status(500).json({ message: "Error inserting recipe into database" });
-            }
+        // Return the inserted recipe with a success message
+        res.status(201).json({
+            message: "Recipe created successfully",
+            recipe: result.ops[0]
         });
 
     } catch (error) {
-        console.error("Error posting recipe:", error);
         res.status(500).json({ message: "Error posting recipe" });
     }
 };
+
 recipesCont.uploadImage = async (req, res, next) => {
     const recipeId = req.params.id;
 
