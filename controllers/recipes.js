@@ -82,7 +82,7 @@ recipesCont.postRecipe = async (req, res, next) => {
         // Get the recipe data from the request body
         const { title, ingredients, instructions } = req.body;
 
-        // Manual Validation until Oauth is added
+        // Manual Validation until OAuth is added
         if (!title || !ingredients || !instructions) {
             return res.status(400).json({ message: "Missing required fields" });
         }
@@ -112,14 +112,19 @@ recipesCont.postRecipe = async (req, res, next) => {
                 reviews: []
             };
 
-            // Insert the new recipe into the collection
-            const result = await collection.insertOne(newRecipe);
+            try {
+                // Insert the new recipe into the collection
+                const result = await collection.insertOne(newRecipe);
 
-            // Return the inserted recipe with a success message
-            res.status(201).json({
-                message: "Recipe created successfully",
-                recipe: result.ops[0]
-            });
+                // Return the inserted recipe with a success message
+                res.status(201).json({
+                    message: "Recipe created successfully",
+                    recipe: result.ops[0]
+                });
+            } catch (dbError) {
+                console.error("Error inserting recipe into database:", dbError);
+                res.status(500).json({ message: "Error inserting recipe into database" });
+            }
         });
 
     } catch (error) {
@@ -127,7 +132,6 @@ recipesCont.postRecipe = async (req, res, next) => {
         res.status(500).json({ message: "Error posting recipe" });
     }
 };
-
 recipesCont.uploadImage = async (req, res, next) => {
     const recipeId = req.params.id;
 
